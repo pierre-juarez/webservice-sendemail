@@ -94,7 +94,7 @@ include('config/config.php');
 
         }else{
             //Error al enviar
-            respuesta_entregada(500, "Error".$mail->ErrorInfo, $correo);        
+            respuesta_entregada(500, "Error".$mail->ErrorInfo, false);        
         }
     }
 
