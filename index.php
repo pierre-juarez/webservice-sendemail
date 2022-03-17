@@ -22,9 +22,10 @@ include('config/config.php');
             $correo = $_POST['correo'];
             $asunto = $_POST['asunto'];
             $body = $_POST['bodyMail'];
+            $correo_copias = $_POST['cc'];
                               
             /** Enviamos el correo electrónico, pasándole los parámetros necesarios */
-            enviarCorreo($correo, $asunto, $body);
+            enviarCorreo($correo, $asunto, $body, $correo_copias);
            
         }
         else
@@ -54,7 +55,7 @@ include('config/config.php');
     }
 
   
-    function enviarCorreo($correo, $asunto, $body){
+    function enviarCorreo($correo, $asunto, $body, $correo_copias){
                 
         $mail = new PHPMailer();
         $mail->IsSMTP();
@@ -70,6 +71,13 @@ include('config/config.php');
         
         $mail->setFrom(CORREO_SISTEMA, NOMBRE_SISTEMA);
         $mail->AddAddress($correo);//Agregar destinatario
+
+        if($correo_copias !== ''){
+            foreach ($correo_copias as $correo) {
+                $mail->addCC($correo);            
+            }
+        }        
+
         $mail->Subject = $asunto;
 
         $body = $body;
